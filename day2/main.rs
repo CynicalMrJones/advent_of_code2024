@@ -15,36 +15,58 @@ fn main() -> Result<()>{
     println!("{}", buf);
 
     let result = buf.lines().map(|line|{
-        let split: String = line.split(" ").collect();
+        let split: Vec<_> = line.split(' ').collect();
         split 
     });
 
-    let test:Vec<String> = result.collect();
-    println!("{}", test[1]);
+    let test:Vec<_> = result.collect();
 
-    let meme = is_greater_than(&test[1]);
+    let mut answer = 0;
+    for i in 0..=test.len()-1{
+        let test1 = is_acending(&test[i]);
+        let test2 = is_decending(&test[i]);
+        if (test1 == true) | (test2 == true){
+            answer += 1;
+        }
+    }
 
-    println!("{}", meme);
+    println!("Number of Safe = {}", answer);
 
     Ok(())
 }
 
-fn is_greater_than(array: &String) -> bool{
-    let mut truth = 0;
-    let mut falseify= 0;
-    let chars: Vec<char> = array.chars().collect();
-    for i in 0..=chars.len()-1  {
-        if (i < chars.len()-1) && (chars[i] > chars[i+1]){
-            truth = truth + 1;
+fn is_acending(array: &Vec<&str>) -> bool{
+    for i in 0..array.len() - 1{
+        let current = array[i];
+        let next = array[i+1];
+        if current < next{
+            let num1: i32 = current.parse().unwrap();
+            let num2: i32 = next.parse().unwrap();
+            if (num1 - num2).abs() >= 4{
+                return false;
+            }
         }
-        else {
-           falseify = falseify + 1; 
+        else{
+            return false;
         }
     }
-    if falseify != 0 {
-       return true 
+    return true;
+}
+
+fn is_decending(array: &Vec<&str>) -> bool{
+    for i in 0..array.len() - 1{
+        let current = array[i];
+        let next = array[i+1];
+        if current > next{
+            let num1: i32 = current.parse().unwrap();
+            let num2: i32 = next.parse().unwrap();
+            if (num1 - num2).abs() >= 4{
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
     }
-    else {
-        return false 
-    }
+    return true;
 }
