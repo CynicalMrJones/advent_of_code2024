@@ -43,6 +43,27 @@ fn is_acending(array: &Vec<&str>) -> bool{
             }
         }
         else{
+            let mut test = array.clone();
+            let index = test.iter().position(|x| *x == array[i+1]).unwrap();
+            test.remove(index);
+            let meme = is_acending_checker(&test);
+            return meme;
+        }
+    }
+    return true;
+}
+
+fn is_acending_checker(array: &Vec<&str>) -> bool{
+    for i in 0..array.len()-1{
+        let current: i32 = array[i].parse().unwrap();
+        let next: i32 = array[i+1].parse().unwrap();
+        if current < next{
+            let abs = (current - next).abs();
+            if (abs >= 4) | (abs == 0) {
+                return false;
+            }
+        }
+        else{
             return false;
         }
     }
@@ -50,6 +71,27 @@ fn is_acending(array: &Vec<&str>) -> bool{
 }
 
 fn is_decending(array: &Vec<&str>) -> bool{
+    for i in 0..array.len()-1{
+        let current: i32 = array[i].parse().unwrap();
+        let next: i32 = array[i+1].parse().unwrap();
+        if current > next{
+            let abs = (current - next).abs();
+            if (abs >= 4) | (abs == 0) {
+                return false;
+            }
+        }
+        else{
+            let mut test = array.clone();
+            let index = test.iter().position(|x| *x == array[i+1]).unwrap();
+            test.remove(index);
+            let meme = is_decending_checker(&test);
+            return meme;
+        }
+    }
+    return true;
+}
+
+fn is_decending_checker(array: &Vec<&str>) -> bool{
     for i in 0..array.len()-1{
         let current: i32 = array[i].parse().unwrap();
         let next: i32 = array[i+1].parse().unwrap();
